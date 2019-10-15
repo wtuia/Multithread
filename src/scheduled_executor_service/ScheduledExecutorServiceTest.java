@@ -18,8 +18,24 @@ import java.util.concurrent.TimeUnit;
 public class ScheduledExecutorServiceTest {
 
     public static void main(String[] args) {
-        ScheduledExecutorService scheduled =
-                new ScheduledThreadPoolExecutor(16);
+        scheduleAtFixedRateTest();
+    }
+
+    /**
+     * 结束完成后按延迟时间执行，实际延时时间 = 执行时间 + 延时时间
+     */
+    private static void scheduleWithFixedDelayTest() {
+        ScheduledExecutorService scheduled = new ScheduledThreadPoolExecutor(1);
         scheduled.scheduleWithFixedDelay(new MyThread(), 1, 10, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 按延迟时间以周期执行 时间延迟时间= 延时时间
+     */
+    private static void scheduleAtFixedRateTest() {
+        // 若核心线程 > 启动的定时任务，则每次定时任务启动会启动随机线程，增加成本
+        ScheduledExecutorService scheduled = new ScheduledThreadPoolExecutor(2);
+        scheduled.scheduleAtFixedRate(new MyThread(), 1, 5, TimeUnit.SECONDS);
+        scheduled.scheduleAtFixedRate(new OtherMyThread(), 1, 5, TimeUnit.SECONDS);
     }
 }

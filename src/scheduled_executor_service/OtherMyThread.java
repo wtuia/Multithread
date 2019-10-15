@@ -2,7 +2,7 @@ package scheduled_executor_service;
 
 import java.text.SimpleDateFormat;
 
-public class MyThread implements Runnable{
+public class OtherMyThread implements Runnable{
 
 
     private static SimpleDateFormat formatter =
@@ -12,7 +12,7 @@ public class MyThread implements Runnable{
     @Override
     public void run() {
         try {
-            System.out.printf("Thread: %s, Thread 1: date:%s %n", Thread.currentThread(),
+            System.out.printf("Thread: %s, Thread 2: date:%s %n", Thread.currentThread(),
                     formatter.format(System.currentTimeMillis()));
         } catch (Exception e) {
             e.printStackTrace();
