@@ -1,5 +1,6 @@
-package scheduled_thread_pool_executor;
+package scheduled_executor_service;
 
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -14,11 +15,11 @@ import java.util.concurrent.TimeUnit;
  * 2，Timer 单线程，当其中一个任务抛出异常时，会导致其他任务的中断
  *
  */
-public class ScheduledThreadPoolExecutorTest {
+public class ScheduledExecutorServiceTest {
 
     public static void main(String[] args) {
-        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
+        ScheduledExecutorService scheduled =
                 new ScheduledThreadPoolExecutor(16);
-        scheduledThreadPoolExecutor.scheduleWithFixedDelay(new MyThread(), 1, 10, TimeUnit.SECONDS);
+        scheduled.scheduleWithFixedDelay(new MyThread(), 1, 10, TimeUnit.SECONDS);
     }
 }

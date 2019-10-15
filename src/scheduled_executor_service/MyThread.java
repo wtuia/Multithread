@@ -1,4 +1,4 @@
-package scheduled_thread_pool_executor;
+package scheduled_executor_service;
 
 public class MyThread implements Runnable{
 
