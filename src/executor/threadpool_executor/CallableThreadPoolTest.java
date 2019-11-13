@@ -2,6 +2,8 @@ package executor.threadpool_executor;
 
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -11,40 +13,30 @@ import java.util.concurrent.*;
  */
 public class CallableThreadPoolTest {
 
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss:SSSS");
 
     /**
-     * <p>若在线程池中传入Callable，则非调用线程执行的任务会等待
-     * (单独例子参:{@link #callTest1}),
-     * 需要再调用返回结果Future时才会执行，且异步。<p/>
-     * <p>并且，如果不调用future的get方法，则非调用线程执行的任务
-     * 的完成状态永远为false（见下第二个for的状态）,即一直等待。<p/>
+     *Callable 不保证线程一定执行，可能会阻塞
      */
     @Test
-    public void callTest() {
+    public void callTest() throws ExecutionException, InterruptedException {
         BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(3);
         ExecutorService service =
-                new ThreadPoolExecutor(1,2,1,
-                        TimeUnit.SECONDS, workQueue, new ThreadPoolExecutor.CallerRunsPolicy());
-
+                new ThreadPoolExecutor(1, 2, 1,
+                        TimeUnit.SECONDS, workQueue, new ThreadPoolExecutor.DiscardPolicy());
 
         List<Future> results = new ArrayList<>();
-        for (int i = 1 ; i < 10 ; i++) {
+        for (int i = 1; i < 10; i++) {
+            System.out.println(workQueue.size() + " | " + i + " | " + formatter.format(LocalDateTime.now()));
             Callable<String> runnable = new MyCallable(i);
             results.add(service.submit(runnable));
         }
 
-        service.shutdown();
-        for (Future future: results) {
-            System.out.println(future.isDone());
-            //System.out.println(future.get());
-            System.out.println();
-        }
-        System.out.println("--------------------------");
-        for (Future future: results) {
-            System.out.println(future.isDone());
-            //System.out.println(future.get());
-            System.out.println(Thread.currentThread());
-        }
+       /* for (Future future : results) {
+            if (!future.isDone()) {
+                System.out.println(future.get());
+            }
+        }*/
     }
 
     @Test
@@ -54,12 +46,10 @@ public class CallableThreadPoolTest {
                 new ThreadPoolExecutor(1,2,1,
                         TimeUnit.SECONDS, workQueue, new ThreadPoolExecutor.CallerRunsPolicy());
 
-
         for (int i = 1 ; i < 10 ; i++) {
             Callable<String> runnable = new MyCallable(i);
+            System.out.println(i);
             service.submit(runnable);
         }
-
-        service.shutdown();
     }
 }

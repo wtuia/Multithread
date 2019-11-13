@@ -1,9 +1,9 @@
-package executors;
+package executors.java_threadpool;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class singleThreadPool {
+public class SingleThreadPool {
     public static void main(String[] args) {
         ExecutorService singleThreadPool = Executors.newSingleThreadExecutor();
 

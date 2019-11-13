@@ -1,10 +1,10 @@
-package executors;
+package executors.java_threadpool;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class workStealingPool {
+public class WorkStealingPool {
 
     private static final int threads = 10;
     // 用于计数线程是否执行完成

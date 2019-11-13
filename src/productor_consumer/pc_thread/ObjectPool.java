@@ -1,4 +1,4 @@
-package productor_consumer;
+package productor_consumer.pc_thread;
 
 public class ObjectPool {
 

@@ -41,7 +41,6 @@ public class MyThreadLocal {
                         MyThreadLocal.threadLocal.remove();
                     }
                 }
-
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

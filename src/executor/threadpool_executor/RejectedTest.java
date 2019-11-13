@@ -1,9 +1,9 @@
 package executor.threadpool_executor;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.*;
 
 /**
@@ -12,6 +12,9 @@ import java.util.concurrent.*;
 public class RejectedTest {
 
     public static void main(String[] args) {
+        Collection collection = new LinkedBlockingQueue();
+        Queue  queue = new LinkedBlockingQueue();
+
         rejectedTest();
     }
 
@@ -19,24 +22,11 @@ public class RejectedTest {
         BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(3);
         ExecutorService service =
                 new ThreadPoolExecutor(1,2,1,
-                        TimeUnit.SECONDS, workQueue, new ThreadPoolExecutor.CallerRunsPolicy());
+                        TimeUnit.SECONDS, workQueue, new ThreadPoolExecutor.DiscardPolicy());
 
-        List<Future> results = new ArrayList<>();
         for (int i = 1 ; i < 10 ; i++) {
             Runnable runnable = new MyRunable(i);
-            results.add(service.submit(runnable));
-        }
-        service.shutdown();
-        System.out.println(service.isShutdown());
-        System.out.println(service.isTerminated());
-        if (service.isTerminated()) {
-            for (Future future : results) {
-                try {
-                    System.out.println(future.get());
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
+            service.submit(runnable);
         }
     }
 

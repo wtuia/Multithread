@@ -1,4 +1,4 @@
-package scheduled_executor_service;
+package executor.scheduled_executor_service;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
