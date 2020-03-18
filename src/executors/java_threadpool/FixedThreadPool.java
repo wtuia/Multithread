@@ -12,5 +12,6 @@ public class FixedThreadPool {
             final int index = 1;
             fixedThreadPool.execute(new ThreadPool(index));
         }
+		System.out.println("执行完成");
     }
 }
