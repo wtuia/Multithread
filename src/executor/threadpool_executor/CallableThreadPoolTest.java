@@ -41,15 +41,19 @@ public class CallableThreadPoolTest {
 
     @Test
     public void callTest1() {
-        BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(3);
-        ExecutorService service =
-                new ThreadPoolExecutor(1,2,1,
-                        TimeUnit.SECONDS, workQueue, new ThreadPoolExecutor.CallerRunsPolicy());
 
-        for (int i = 1 ; i < 10 ; i++) {
-            Callable<String> runnable = new MyCallable(i);
-            System.out.println(i);
-            service.submit(runnable);
-        }
     }
+
+	public static void main(String[] args) {
+		BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(3);
+		ExecutorService service =
+				new ThreadPoolExecutor(1,2,1,
+						TimeUnit.SECONDS, workQueue, new ThreadPoolExecutor.CallerRunsPolicy());
+
+		for (int i = 1 ; i < 10 ; i++) {
+			Callable<String> runnable = new MyCallable(i);
+			System.out.println(i);
+			service.submit(runnable);
+		}
+	}
 }

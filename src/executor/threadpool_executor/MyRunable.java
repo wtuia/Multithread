@@ -18,5 +18,10 @@ public class MyRunable implements Runnable{
                 Thread.currentThread().getName(),
                 System.identityHashCode(Thread.currentThread()), index,
                 formatter.format(LocalDateTime.now()));
-    }
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
